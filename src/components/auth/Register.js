@@ -84,7 +84,7 @@ class Register extends Component {
                   type="text"
                   id="username"
                   aria-describedby="userNameHelp"
-                  placeholder="Enter username"
+                  placeholder="Ingrese nombre de usuario"
                   value={this.state.username}
                   onChange={this.onInputChange}
                 />
@@ -97,7 +97,7 @@ class Register extends Component {
                   type="email"
                   id="email"
                   aria-describedby="emailHelp"
-                  placeholder="Enter email"
+                  placeholder="Ingrese correo"
                   value={this.state.email}
                   onChange={this.onInputChange}
                 />
@@ -112,7 +112,7 @@ class Register extends Component {
                   className="input" 
                   type="password"
                   id="password"
-                  placeholder="Password"
+                  placeholder="Contraseña"
                   value={this.state.password}
                   onChange={this.onInputChange}
                 />
@@ -127,7 +127,7 @@ class Register extends Component {
                   className="input" 
                   type="password"
                   id="confirmpassword"
-                  placeholder="Confirm password"
+                  placeholder="Confirmar contraseña"
                   value={this.state.confirmpassword}
                   onChange={this.onInputChange}
                 />
@@ -138,13 +138,13 @@ class Register extends Component {
             </div>
             <div className="field">
               <p className="control">
-                <a href="/forgotpassword">Forgot password?</a>
+                <a href="/forgotpassword">¿Olvidó la contraseña?</a>
               </p>
             </div>
             <div className="field">
               <p className="control">
                 <button className="button is-success">
-                  Register
+                  Registrar
                 </button>
               </p>
             </div>

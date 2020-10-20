@@ -68,7 +68,7 @@ class ChangePassword extends Component {
     return (
       <section className="section auth">
         <div className="container">
-          <h1>Change Password</h1>
+          <h1>Cambiar contraseña</h1>
           <FormErrors formerrors={this.state.errors} />
 
           <form onSubmit={this.handleSubmit}>
@@ -78,7 +78,7 @@ class ChangePassword extends Component {
                   className="input" 
                   type="password"
                   id="oldpassword"
-                  placeholder="Old password"
+                  placeholder="Contraseña antigua"
                   value={this.state.oldpassword}
                   onChange={this.onInputChange}
                 />
@@ -93,7 +93,7 @@ class ChangePassword extends Component {
                   className="input"
                   type="password"
                   id="newpassword"
-                  placeholder="New password"
+                  placeholder="Nueva contraseña"
                   value={this.state.newpassword}
                   onChange={this.onInputChange}
                 />
@@ -108,7 +108,7 @@ class ChangePassword extends Component {
                   className="input"
                   type="password"
                   id="confirmpassword"
-                  placeholder="Confirm password"
+                  placeholder="Confirmar contraseña"
                   value={this.state.confirmpassword}
                   onChange={this.onInputChange}
                 />
@@ -119,13 +119,13 @@ class ChangePassword extends Component {
             </div>
             <div className="field">
               <p className="control">
-                <a href="/forgotpassword">Forgot password?</a>
+                <a href="/forgotpassword">¿Olvidaste la contraseña?</a>
               </p>
             </div>
             <div className="field">
               <p className="control">
                 <button className="button is-success">
-                  Change password
+                  Cambiar contraseña
                 </button>
               </p>
             </div>
