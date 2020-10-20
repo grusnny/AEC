@@ -83,8 +83,8 @@ export default class ProductAdmin extends Component {
       <Fragment>
         <section className="section">
           <div className="container">
-            <h1>Product Admin</h1>
-            <p className="subtitle is-5">Add and remove products using the form below:</p>
+            <h1>Administrador de productos</h1>
+            <p className="subtitle is-5">Agregue y elimine productos usando el formulario a continuación:</p>
             <br />
             <div className="columns">
               <div className="column is-one-third">
@@ -110,7 +110,7 @@ export default class ProductAdmin extends Component {
                     </div>
                     <div className="control">
                       <button type="submit" className="button is-primary is-medium">
-                        Add product
+                        Añadir productos
                       </button>
                     </div>
                   </div>
