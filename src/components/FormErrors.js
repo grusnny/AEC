@@ -9,11 +9,11 @@ function FormErrors(props) {
       <div className="error container help is-danger">
         <div className="row justify-content-center">
           {props.formerrors.passwordmatch
-            ? "Password value does not match confirm password value"
+            ? "El valor de la contraseña no coincide con el valor de confirmación de la contraseña"
             : ""}
         </div>
         <div className="row justify-content-center help is-danger">
-          {props.formerrors.blankfield ? "All fields are required" : ""}
+          {props.formerrors.blankfield ? "Todos los campos son obligatorios" : ""}
         </div>
       </div>
     );
