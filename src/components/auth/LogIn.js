@@ -75,7 +75,7 @@ class LogIn extends Component {
                   type="text"
                   id="username"
                   aria-describedby="usernameHelp"
-                  placeholder="Enter username or email"
+                  placeholder="Ingrese nombre de usuario o correo"
                   value={this.state.username}
                   onChange={this.onInputChange}
                 />
@@ -87,7 +87,7 @@ class LogIn extends Component {
                   className="input" 
                   type="password"
                   id="password"
-                  placeholder="Password"
+                  placeholder="Contraseña"
                   value={this.state.password}
                   onChange={this.onInputChange}
                 />
@@ -98,13 +98,13 @@ class LogIn extends Component {
             </div>
             <div className="field">
               <p className="control">
-                <a href="/forgotpassword">Forgot password?</a>
+                <a href="/forgotpassword">¿Olvidó la contraseña?</a>
               </p>
             </div>
             <div className="field">
               <p className="control">
                 <button className="button is-success">
-                  Login
+                  Iniciar sesión
                 </button>
               </p>
             </div>
