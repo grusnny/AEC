@@ -17,7 +17,7 @@ export default class Navbar extends Component {
       <nav className="navbar" role="navigation" aria-label="main navigation">
         <div className="navbar-brand">
           <a className="navbar-item" href="/">
-            <img src="FINAL.png" width="112" height="34" alt="hexal logo" />
+            <img src="Logo.png" width="112" height="34" alt="hexal logo" />
           </a>
         </div>
 
