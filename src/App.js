@@ -16,8 +16,16 @@ import Footer from './components/Footer';
 import { Auth } from 'aws-amplify';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
+<<<<<<< Updated upstream
 import  Services from './modules/Home/Home';
 
+=======
+<<<<<<< Updated upstream
+=======
+import  Services from './components/Home/Home';
+
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 library.add(faEdit);
 
 class App extends Component {
