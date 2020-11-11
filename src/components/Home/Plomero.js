@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import "../Home/Albanil.css";
+import "../Home/Home.css";
 import { Container } from 'reactstrap';
 import firebase from "../firebase";
-import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
+import { Map, Marker, Popup, TileLayer } from "react-leaflet";
 import * as L from 'leaflet'
 import icon from '../Home/marker2.webp';
 import {
     Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle,
     ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem
 } from 'reactstrap';
+import "../Home/Plomero.css";
+
 var name;
 var profession;
 var mail;
@@ -26,12 +28,12 @@ var greenIcon = L.icon({
     shadowAnchor: [4, 62],  // the same for the shadow
     popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
 });
-
 const onE = (e) => {
     e.preventDefault();
     console.log(name);
     console.log(profession);
     var user = firebase.auth().currentUser;
+    //console.log(result);
     const querystring = require('querystring');
     axios.post('https://microservicio-dominio.herokuapp.com/Solicitud', querystring.stringify({
         uid: user.uid,
@@ -55,8 +57,10 @@ const onE = (e) => {
 
         });
 
+
+
 }
-function Albanil() {
+function Plomero() {
 
     const [worker, setWorker] = React.useState([])
     const [activeWorker, setActiveWorker] = React.useState(null);
@@ -67,7 +71,7 @@ function Albanil() {
     React.useEffect(() => {
         const fetchData = async () => {
             const db = firebase.firestore()
-            const data = await db.collection('worker').where("profession", "==", "Albañil").get()
+            const data = await db.collection('worker').where("profession", "==", "Plomero").get()
             setWorker(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
 
         }
@@ -77,10 +81,10 @@ function Albanil() {
     return (
         <div className="App">
             <Container className='text-left'>
-                <ButtonDropdown  direction="right" isOpen={btnDropright} toggle={toggle} >
-                    <DropdownToggle caret color="info">
+                <ButtonDropdown direction="right" isOpen={btnDropright} toggle={toggle}>
+                    <DropdownToggle caret>
                         Categorias
-                     </DropdownToggle>
+      </DropdownToggle>
                     <DropdownMenu>
                         <DropdownItem header>Selecciona una nueva categoria</DropdownItem>
                         <DropdownItem> <a class="nav-link" href="/albanil">Albañiles</a></DropdownItem>
@@ -136,4 +140,4 @@ function Albanil() {
     );
 }
 
-export default Albanil; 
+export default Plomero; 
