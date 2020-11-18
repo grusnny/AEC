@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import "../Home/Albanil.css";
 import { Container } from 'reactstrap';
 import firebase from "../firebase";
-import { Map, Marker, Popup, TileLayer } from "react-leaflet";
+import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
 import * as L from 'leaflet'
 import icon from '../Home/marker2.webp';
 import {

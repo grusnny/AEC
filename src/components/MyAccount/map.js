@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Map as LeafletMap,Map, TileLayer, Marker, Popup } from 'react-leaflet';
+import { Map as LeafletMap, TileLayer, Marker, Popup } from 'react-leaflet';
 
 class Mapp extends React.Component {
     componentDidMount() {
@@ -22,7 +22,6 @@ class Mapp extends React.Component {
                 animate={true}
                 easeLinearity={0.35}
                 onclick={this.handleClick}>
-                >
                 <TileLayer
                 url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
                 />

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import "../Home/Home.css";
 import { Container } from 'reactstrap';
-import firebase from "../firebase";
-import { Map, Marker, Popup, TileLayer } from "react-leaflet";
+import { MapContainer  as Map, Marker, Popup, TileLayer } from "react-leaflet";
 import * as L from 'leaflet'
 import icon from '../Home/marker2.webp';
+import { Auth } from 'aws-amplify';
+import {postWorker, getAllWorkers} from '../services/worker'
 import {
     Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle,
     ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem
@@ -18,7 +19,6 @@ var mail;
 var wid;
 var foto;
 var tel;
-const axios = require('axios');
 var greenIcon = L.icon({
     iconUrl: icon,
     //shadowUrl: shadow,
@@ -32,13 +32,10 @@ var greenIcon = L.icon({
 
 const onE = (e) => {
     e.preventDefault();
-    console.log(name);
-    console.log(profession);
-    var user = firebase.auth().currentUser;
-    //console.log(result);
     const querystring = require('querystring');
-    axios.post('https://microservicio-dominio.herokuapp.com/Solicitud', querystring.stringify({
-        uid: user.uid,
+
+    postWorker(querystring.stringify({
+        uid: this.props.auth.user.username,
         wname: name,
         wprofession: profession,
         wmail: mail,
@@ -46,21 +43,15 @@ const onE = (e) => {
         wid: wid,
         wtel: tel
     }))
-        .then(function (res) {
-            if (res.status == 200) {
-                //mensaje.innerHTML = 'El nuevo Post ha sido almacenado con id: ' + res;
-                window.location.href = "/pedidos";
-                console.log(res.status);
-            }
-        }).catch(function (err) {
-            console.log(err);
+        .then(data => {
+            console.log(data); // JSON data parsed by `data.json()` call
         })
-        .then(function () {
+        .catch(function (err) {
+            console.log(err);
         });
-
-
-
 }
+
+
 function Home() {
 
     const [worker, setWorker] = React.useState([])
@@ -71,10 +62,21 @@ function Home() {
 
     React.useEffect(() => {
         const fetchData = async () => {
-            const db = firebase.firestore()
-            const data = await db.collection('worker').where("profession", "==", "Electricista").get()
-            setWorker(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
 
+            getAllWorkers()
+                .then(data => {
+                    console.log(data); // JSON data parsed by `data.json()` call
+                    
+                    // for (var clave in data){
+                    //     if (data.profession=="Ing") {
+                    //       alert("La clave es " + clave+ " y el valor es " + json[clave]);
+                    //       setWorker(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
+                    //     }
+                    // }
+                })
+                .catch(function (err) {
+                    console.log(err);
+                });
         }
         fetchData()
     }, [])
