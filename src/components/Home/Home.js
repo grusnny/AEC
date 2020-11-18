@@ -64,15 +64,19 @@ function Home() {
         const fetchData = async () => {
             getAllWorkers()
                 .then(data => {
-                     const info =JSON.stringify(data)
-                    console.log("esta es la informacion: " + info);                  
+                    const info =JSON.stringify(data)
+                    console.log("esta es la informacion: " + info);
+                    let workers=[];                  
                     for (var clave of data){
                         console.log(clave.profession);
                         if (clave.profession=="Ing") {
                           console.log(clave);
-                          setWorker(clave.docs.map(doc => ({ ...doc.data(), id: doc.id })))// esto es lo que hay que cargar
+                          workers.push(clave);
                         }
                     }
+                    console.log(workers)
+                    setWorker(workers.map(doc => ({ ...doc, id:doc.uId })))
+                    
                 })
                 .then(data => console.log(data) )
                 .catch(error => console.log('error', error));

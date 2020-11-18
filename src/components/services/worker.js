@@ -18,9 +18,6 @@ async function updateWorker(request = {}) {
         body: request,
         redirect: 'follow'
       })
-    .then(response => response.text())
-    .then(result => console.log(result))
-    .catch(error => console.log('error', error));
 
     return response.json();
 } 
@@ -32,18 +29,12 @@ async function deleteWorker(request = {}) {
         body: request,
         redirect: 'follow'
       })
-    .then(response => response.text())
-    .then(result => console.log(result))
-    .catch(error => console.log('error', error));
 
     return response.json();
 } 
 
 async function getWorkerById(id = "") {
     const response = await fetch(REQUEST_API+"/"+id, requestOptionsGet)
-    .then(response => response.text())
-    .then(result => console.log(result))
-    .catch(error => console.log('error', error));
 
     return response.json(); 
 } 
@@ -55,15 +46,13 @@ async function postWorker(request = {}) {
             body: request,
             redirect: 'follow'
         })
-    .then(response => response.text())
-    .then(result => console.log(result))
-    .catch(error => console.log('error', error));
 
     return response.json(); 
 }   
 
 async function getAllWorkers() {
-    const response = await fetch(REQUEST_API, requestOptionsGet)    
+    const response = await fetch(REQUEST_API, requestOptionsGet)  
+
     return response.json(); 
 }   
 
