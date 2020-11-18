@@ -5,6 +5,7 @@ import { MapContainer  as Map, Marker, Popup, TileLayer } from "react-leaflet";
 import * as L from 'leaflet'
 import icon from '../Home/marker2.webp';
 import { Auth } from 'aws-amplify';
+import {postWorker, getAllWorkers} from '../services/worker'
 import {
     Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle,
     ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem
@@ -33,7 +34,8 @@ var greenIcon = L.icon({
 const onE = (e) => {
     e.preventDefault();
     const querystring = require('querystring');
-    axios.post('http://ayudaencasarequestcruddynamodb-env-1.eba-epiwqnup.us-east-1.elasticbeanstalk.com/request', querystring.stringify({
+
+    postWorker(querystring.stringify({
         uid: this.props.auth.user.username,
         wname: name,
         wprofession: profession,
@@ -42,15 +44,11 @@ const onE = (e) => {
         wid: wid,
         wtel: tel
     }))
-        .then(function (res) {
-            if (res.status == 200) {
-                window.location.href = "/products";
-                console.log(res.status);
-            }
-        }).catch(function (err) {
-            console.log(err);
+        .then(data => {
+            console.log(data); // JSON data parsed by `data.json()` call
         })
-        .then(function () {
+        .catch(function (err) {
+            console.log(err);
         });
 }
 
@@ -65,26 +63,21 @@ function Home() {
 
     React.useEffect(() => {
         const fetchData = async () => {
-        const querystring = require('querystring');
-        axios.get('http://ayudaencasaworkercruddynamodb-env.eba-m4tqhjph.us-east-1.elasticbeanstalk.com/worker', querystring.stringify({
-        }))
-            .then(function (res) {
-                if (res.status == 200) {
-                    const data = res.data;
-                    console.log(data);
+
+            getAllWorkers()
+                .then(data => {
+                    console.log(data); // JSON data parsed by `data.json()` call
+                    
                     // for (var clave in data){
                     //     if (data.profession=="Ing") {
                     //       alert("La clave es " + clave+ " y el valor es " + json[clave]);
                     //       setWorker(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
                     //     }
                     // }
-
-                }
-            }).catch(function (err) {
-                console.log(err);
-            })
-            .then(function () {
-            });
+                })
+                .catch(function (err) {
+                    console.log(err);
+                });
         }
         fetchData()
     }, [])
