@@ -82,10 +82,7 @@ function Home() {
         var f=new Date();
         return (f.getDate() + " de " + meses[f.getMonth()] + " de " + f.getFullYear());
     }
-    function ActivarWorker(element) {
-        console.log("activando worker")
-        setActiveWorker(element);
-    }
+
     React.useEffect(() => {
         const fetchData = async () => {
             getAllWorkers()
@@ -195,7 +192,7 @@ function Home() {
                             </div>
                         </Popup>
                     )}
-                    
+                    <LocationMap/>
                 </Map>
             </Container>
         </div>
