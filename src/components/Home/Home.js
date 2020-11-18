@@ -19,7 +19,6 @@ var mail;
 var wid;
 var foto;
 var tel;
-const axios = require('axios');
 var greenIcon = L.icon({
     iconUrl: icon,
     //shadowUrl: shadow,
