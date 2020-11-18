@@ -12,7 +12,7 @@ import {
 } from 'reactstrap';
 
 
-
+var meses = new Array ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
 var name;
 var profession;
 var mail;
@@ -54,13 +54,14 @@ const onE = (e) => {
 
 function Home() {
 
-    const [worker, setWorker] = React.useState([])
-    const [activeWorker, setActiveWorker] = React.useState(null);
+    const [worker, setWorker] = useState([])
+    const [activeWorker, setActiveWorker] = useState(null);
     const [btnDropright, setOpen] = useState(false);
     const toggle = () => setOpen(!btnDropright);
-    const [position, setPosition] = useState(null)
+
 
     function LocationMap() { 
+        const [position, setPosition] = useState(null)
         const map = useMapEvents({
           click() {
             map.locate()
@@ -77,6 +78,14 @@ function Home() {
           )
     }
 
+    function currentDate(){
+        var f=new Date();
+        return (f.getDate() + " de " + meses[f.getMonth()] + " de " + f.getFullYear());
+    }
+    function ActivarWorker(element) {
+        console.log("activando worker")
+        setActiveWorker(element);
+    }
     React.useEffect(() => {
         const fetchData = async () => {
             getAllWorkers()
@@ -128,12 +137,15 @@ function Home() {
                             key={element.id}
                             icon={greenIcon}
                             position={[element.latitude, element.length]}
-                            onClick={() => {
-                                setActiveWorker(element);
-                            }}
+                            eventHandlers={{
+                                click: () => {
+                                    setActiveWorker(element);
+                                },
+                              }}
+
                         />
                     )}
-                    {activeWorker && (
+                    { activeWorker === null ? null : (
                         <Popup
                             position={[
                                 activeWorker.latitude,
@@ -144,21 +156,46 @@ function Home() {
                             }}
                         >
                             <div>
-                                <Card style={{ width: '12rem' }}>
-                                    <CardImg top width="5%" src={foto = activeWorker.photo} />
-                                    <CardBody>
-                                        <CardTitle>Nombre: {name = activeWorker.name}</CardTitle>
-                                        <CardSubtitle>Correo: {mail = activeWorker.mail}</CardSubtitle>
-                                        <CardText>Profesión: {profession = activeWorker.profession}</CardText>
-                                        <CardSubtitle>Telefono: {tel = activeWorker.telephone}</CardSubtitle>
-                                        <CardSubtitle>{wid = activeWorker.uId}</CardSubtitle>
-                                        <button type="button" className="btn btn-outline-primary" onClick={onE} >Contactar</button>
-                                    </CardBody>
-                                </Card>
+                                <div class="card">
+                                    <div class="card-image">
+                                        <figure class="image is-4by3">{foto = activeWorker.photo}
+                                        <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image"/>
+                                        </figure>
+                                    </div>
+                                    <div class="card-content">
+                                        <div class="media">
+                                        <div class="media-left">
+                                            <figure class="image is-48x48">
+                                            <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image"/>
+                                            </figure>
+                                        </div>
+                                        <div class="media-content">
+                                            <p class="title is-4">{name = activeWorker.name}</p>
+                                            <p class="subtitle is-6">{mail = activeWorker.mail}</p>
+
+                                        </div>
+                                        </div>
+
+                                        <div class="content">
+                                        <strong>Profesión: {profession = activeWorker.profession}</strong>
+                                        <br/>
+                                        <strong>Telefono: {tel = activeWorker.telephone}</strong>
+                                        <br/>
+                                        <strong><time datetime="2016-1-1">{currentDate()}</time></strong>
+                                        <br/>
+                                        <br/>
+                                        <div align="center">
+                                        <button className="button is-primary is-rounded "  onClick={onE}>
+                                                <strong>Contactar</strong>
+                                        </button>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>                            
                             </div>
                         </Popup>
                     )}
-                    <LocationMap/>
+                    
                 </Map>
             </Container>
         </div>
