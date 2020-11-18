@@ -63,10 +63,7 @@ async function postWorker(request = {}) {
 }   
 
 async function getAllWorkers() {
-    const response = await fetch(REQUEST_API, requestOptionsGet)
-    .then(response => response.text())
-    .then(result => console.log(result))
-    .catch(error => console.log('error', error));    
+    const response = await fetch(REQUEST_API, requestOptionsGet)    
     return response.json(); 
 }   
 
