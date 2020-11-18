@@ -44,7 +44,7 @@ const onE = (e) => {
         wtel: tel
     }))
         .then(data => {
-            console.log(data); // JSON data parsed by `data.json()` call
+            console.log(data);
         })
         .catch(function (err) {
             console.log(err);
@@ -62,21 +62,20 @@ function Home() {
 
     React.useEffect(() => {
         const fetchData = async () => {
-
             getAllWorkers()
                 .then(data => {
-                    console.log(data); // JSON data parsed by `data.json()` call
-                    
-                    // for (var clave in data){
-                    //     if (data.profession=="Ing") {
-                    //       alert("La clave es " + clave+ " y el valor es " + json[clave]);
-                    //       setWorker(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
-                    //     }
-                    // }
+                     const info =JSON.stringify(data)
+                    console.log("esta es la informacion: " + info);                  
+                    for (var clave of data){
+                        console.log(clave.profession);
+                        if (clave.profession=="Ing") {
+                          console.log(clave);
+                          setWorker(clave.docs.map(doc => ({ ...doc.data(), id: doc.id })))// esto es lo que hay que cargar
+                        }
+                    }
                 })
-                .catch(function (err) {
-                    console.log(err);
-                });
+                .then(data => console.log(data) )
+                .catch(error => console.log('error', error));
         }
         fetchData()
     }, [])
