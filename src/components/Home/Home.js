@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import "../Home/Home.css";
 import { Container } from 'reactstrap';
-import { MapContainer  as Map, Marker, Popup, TileLayer } from "react-leaflet";
+import { MapContainer  as Map, useMapEvents, Marker, Popup, TileLayer } from "react-leaflet";
 import * as L from 'leaflet'
 import icon from '../Home/marker2.webp';
 import { Auth } from 'aws-amplify';
@@ -57,8 +57,25 @@ function Home() {
     const [worker, setWorker] = React.useState([])
     const [activeWorker, setActiveWorker] = React.useState(null);
     const [btnDropright, setOpen] = useState(false);
-
     const toggle = () => setOpen(!btnDropright);
+    const [position, setPosition] = useState(null)
+
+    function LocationMap() { 
+        const map = useMapEvents({
+          click() {
+            map.locate()
+          },
+          locationfound(e) {
+            setPosition(e.latlng)
+            map.flyTo(e.latlng, map.getZoom())
+          },
+        })
+        return position === null ? null : (
+            <Marker position={position}>
+              <Popup>Estas aquí</Popup>
+            </Marker>
+          )
+    }
 
     React.useEffect(() => {
         const fetchData = async () => {
@@ -100,7 +117,8 @@ function Home() {
                         <DropdownItem> <a class="nav-link" href="/plomero">Plomeros</a></DropdownItem>
                     </DropdownMenu>
                 </ButtonDropdown>
-                <Map center={[6.267417, -75.568389]} zoom={15}>
+                    <Map center={[6.267417, -75.568389]} zoom={15} Popup={true}>
+                
                     <TileLayer
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -110,7 +128,7 @@ function Home() {
                             key={element.id}
                             icon={greenIcon}
                             position={[element.latitude, element.length]}
-                            onDblclick={() => {
+                            onClick={() => {
                                 setActiveWorker(element);
                             }}
                         />
@@ -140,6 +158,7 @@ function Home() {
                             </div>
                         </Popup>
                     )}
+                    <LocationMap/>
                 </Map>
             </Container>
         </div>
