@@ -18,9 +18,6 @@ async function updateUser(request = {}) {
         body: request,
         redirect: 'follow'
       })
-    .then(response => response.text())
-    .then(result => console.log(result))
-    .catch(error => console.log('error', error));
 
     return response.json();
 } 
@@ -32,18 +29,12 @@ async function deleteUser(request = {}) {
         body: request,
         redirect: 'follow'
       })
-    .then(response => response.text())
-    .then(result => console.log(result))
-    .catch(error => console.log('error', error));
 
     return response.json();
 } 
 
 async function getUserById(id = "") {
     const response = await fetch(REQUEST_API+"/"+id, requestOptionsGet)
-    .then(response => response.text())
-    .then(result => console.log(result))
-    .catch(error => console.log('error', error));
 
     return response.json(); 
 } 
@@ -55,18 +46,13 @@ async function postUser(request = {}) {
             body: request,
             redirect: 'follow'
         })
-    .then(response => response.text())
-    .then(result => console.log(result))
-    .catch(error => console.log('error', error));
 
     return response.json(); 
 }   
 
 async function getAllUsers() {
     const response = await fetch(REQUEST_API, requestOptionsGet)
-    .then(response => response.text())
-    .then(result => console.log(result))
-    .catch(error => console.log('error', error));    
+
     return response.json(); 
 }   
 
