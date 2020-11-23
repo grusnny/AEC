@@ -29,7 +29,7 @@ export default class Navbar extends Component {
             <a href="/home" className="navbar-item">
               Servicios
             </a>
-            <a href="/admin" className="navbar-item">
+            <a href="/account" className="navbar-item">
               Mi Perfil
             </a>
           </div>
