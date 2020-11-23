@@ -81,61 +81,64 @@ export default class ProductAdmin extends Component {
   render() {
     return (
       <Fragment>
-        <section className="section">
+         {this.props.auth.isAuthenticated && this.props.auth.user && (
+          <section className="section">
           <div className="container">
-            <h1>Administrador de productos</h1>
-            <p className="subtitle is-5">Agregue y elimine productos usando el formulario a continuación:</p>
-            <br />
-            <div className="columns">
-              <div className="column is-one-third">
-                <form onSubmit={event => this.handleAddProduct(this.state.newproduct.id, event)}>
-                  <div className="field has-addons">
-                    <div className="control">
-                      <input 
-                        className="input is-medium"
-                        type="text" 
-                        placeholder="Enter name"
-                        value={this.state.newproduct.productname}
-                        onChange={this.onAddProductNameChange}
-                      />
+            <h1>Bienvenido {this.props.auth.user.username}</h1>
+              <p className="subtitle is-5">Aqui podras ver tu informacion y los servicios contratados</p>
+              <br />
+              <div className="columns">
+                <div className="column is-one-third">
+                  <form onSubmit={event => this.handleAddProduct(this.state.newproduct.id, event)}>
+                    <div className="field has-addons">
+                      <div className="control">
+                        <input 
+                          className="input is-medium"
+                          type="text" 
+                          placeholder="Enter name"
+                          value={this.state.newproduct.productname}
+                          onChange={this.onAddProductNameChange}
+                        />
+                      </div>
+                      <div className="control">
+                        <input 
+                          className="input is-medium"
+                          type="text" 
+                          placeholder="Enter id"
+                          value={this.state.newproduct.id}
+                          onChange={this.onAddProductIdChange}
+                        />
+                      </div>
+                      <div className="control">
+                        <button type="submit" className="button is-primary is-medium">
+                          Añadir productos
+                        </button>
+                      </div>
                     </div>
-                    <div className="control">
-                      <input 
-                        className="input is-medium"
-                        type="text" 
-                        placeholder="Enter id"
-                        value={this.state.newproduct.id}
-                        onChange={this.onAddProductIdChange}
-                      />
+                  </form>
+                </div>
+                <div className="column is-two-thirds">
+                  <div className="tile is-ancestor">
+                    <div className="tile is-4 is-parent  is-vertical">
+                      { 
+                        this.state.products.map((product, index) => 
+                          <Product 
+                            isAdmin={true}
+                            handleUpdateProduct={this.handleUpdateProduct}
+                            handleDeleteProduct={this.handleDeleteProduct} 
+                            name={product.productname} 
+                            id={product.id}
+                            key={product.id}
+                          />)
+                      }
                     </div>
-                    <div className="control">
-                      <button type="submit" className="button is-primary is-medium">
-                        Añadir productos
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-              <div className="column is-two-thirds">
-                <div className="tile is-ancestor">
-                  <div className="tile is-4 is-parent  is-vertical">
-                    { 
-                      this.state.products.map((product, index) => 
-                        <Product 
-                          isAdmin={true}
-                          handleUpdateProduct={this.handleUpdateProduct}
-                          handleDeleteProduct={this.handleDeleteProduct} 
-                          name={product.productname} 
-                          id={product.id}
-                          key={product.id}
-                        />)
-                    }
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+            )}
+        
       </Fragment>
     )
   }
