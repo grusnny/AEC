@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from 'react';
-import Product from './Product';
+import Product from '../Product';
 import axios from "axios";
-const config = require('../config.json');
+const config = require('../../config.json');
 
-export default class ProductAdmin extends Component {
+export default class Account extends Component {
 
   state = {
     newproduct: { 

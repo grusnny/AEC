@@ -4,7 +4,7 @@ import './App.css';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Products from './components/Products';
-import ProductAdmin from './components/ProductAdmin';
+import Account from './components/MyAccount/Account';
 import LogIn from './components/auth/LogIn';
 import Register from './components/auth/Register';
 import ForgotPassword from './components/auth/ForgotPassword';
@@ -69,7 +69,7 @@ class App extends Component {
             <Switch>
               <Route exact path="/" render={(props) => <Home {...props} auth={authProps} />} />
               <Route exact path="/products" render={(props) => <Products {...props} auth={authProps} />} />
-              <Route exact path="/admin" render={(props) => <ProductAdmin {...props} auth={authProps} />} />
+              <Route exact path="/account" render={(props) => <Account {...props} auth={authProps} />} />
               <Route exact path="/login" render={(props) => <LogIn {...props} auth={authProps} />} />
               <Route exact path="/register" render={(props) => <Register {...props} auth={authProps} />} />
               <Route exact path="/forgotpassword" render={(props) => <ForgotPassword {...props} auth={authProps} />} />

@@ -1,5 +1,5 @@
 
-const API = 'http://ayudaencasarequestcruddynamodb-env-1.eba-epiwqnup.us-east-1.elasticbeanstalk.com';
+const API = 'https://ayudaencasarequestcruddynamodb.herokuapp.com';
 const REQUEST_API = API + '/requests';
 
 var headers = new Headers();
