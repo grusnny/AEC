@@ -32,6 +32,9 @@ export default class Navbar extends Component {
             <a href="/account" className="navbar-item">
               Mi Perfil
             </a>
+            <a href="/requests" className="navbar-item">
+              Solicitudes
+            </a>
           </div>
 
           <div className="navbar-end">
