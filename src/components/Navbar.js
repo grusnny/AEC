@@ -41,7 +41,7 @@ export default class Navbar extends Component {
             <div className="navbar-item">
               {this.props.auth.isAuthenticated && this.props.auth.user && (
                 <p>
-                  Hola {this.props.auth.user.username.toUpperCase()}
+                  Hola {this.props.auth.user.username}
                 </p>
               )}
               <div className="buttons">
