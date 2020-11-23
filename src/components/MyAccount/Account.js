@@ -29,7 +29,7 @@ export default class Account extends Component {
             <div class="column">Aqui va la foto si existe</div>
               <div class="box" >
                 <p class="title is-5">Informacion del usuario</p>
-                <p class="subtitle">Aqui debe haber el espacio para poner la Direccion</p>
+                <p class="subtitle">Aqui puedes ver tus datos o actualizarlos</p>
                 <form >
                   <div class="column">
                       <div className="field">
@@ -110,7 +110,7 @@ export default class Account extends Component {
               </div>
               
             </div> 
-            <div class="column is-full">
+            <div class="column is-two-thirds">
             <div class="box" > <MapExample /></div>
             </div>
             </div>
