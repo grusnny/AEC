@@ -5,7 +5,7 @@ import { MapContainer  as Map, useMapEvents, Marker, Popup, TileLayer } from "re
 import * as L from 'leaflet'
 import icon from '../Home/marker2.webp';
 import { Auth } from 'aws-amplify';
-import {postWorker, getAllWorkers} from '../Services/worker'
+import {postWorker, getAllWorkers} from '../services/worker'
 import {
     Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle,
     ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem

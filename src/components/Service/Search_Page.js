@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Resultado from './Resultados';
-import {postRequest, getAllRequests} from '../Services/request'
+import {postRequest, getAllRequests} from '../services/request'
 import { Auth } from 'aws-amplify';
 
 function SearchPage() {
