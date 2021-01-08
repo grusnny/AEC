@@ -1,5 +1,5 @@
 
-const API = 'https://ayudaencasaworkercruddynamodb.herokuapp.com/';
+const API = 'https://ayudaencasa-workers-servicio.herokuapp.com';
 const REQUEST_API = API + '/workers';
 
 var headers = new Headers();
