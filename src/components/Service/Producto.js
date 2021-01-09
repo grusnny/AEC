@@ -17,7 +17,7 @@ class Producto extends Component{
         wProfession}=this.props.producto;
         
         return(
-            <div class="column is-4">
+            <div className="col-12 col-sm-6 col-md-4 col-lg-12 mb-4" >
                 <div class="card">
                     <div class="card-image">
                         <figure class="image is-4by3">

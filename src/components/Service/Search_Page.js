@@ -14,7 +14,6 @@ function SearchPage() {
                     const info =JSON.stringify(data)
                     let request=[];                  
                     for (var clave of data){
-                        console.log(clave.profession);
                         if (true) {
                             console.log(clave);
                             request.push(clave);
@@ -34,11 +33,11 @@ function SearchPage() {
             <div className="jumbotron" align="center">
             <h1>Revisa las peticiones de trabajos que has solicitado:</h1>
             </div>
-            <section class="section">
+            <div  className="row justify-content-center">
                         <Resultado
                             resultado={resultadoBusqueda}
                         />
-            </section>
+            </div>
         </div>
     );
 
