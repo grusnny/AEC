@@ -10,40 +10,26 @@ class Resultados extends Component {
         if (resultados.length === 0) return null;
 
         return(
-            <Modal
-            size="sm"
-            aria-labelledby="contained-modal-title-vcenter"
-            centered>
-            <Modal.Header style={{backgroundColor: '#BAE4FF'}} closeButton>
-            <Modal.Title id="contained-modal-title-vcenter">
-                Reparaciones
-            </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                {resultados.map(resultado =>(
-                    <ul>
+            <React.Fragment>
+                <div className="body col-16 p-5 row">
+                {resultados.map((resultado, index) =>
+                    <div key={index}>
                         <Producto
-                            key={resultado.wId}
+                            key={resultado.rId}
                             producto={resultado}
                             id={resultado.id}
                         />
-                    </ul>
-                ))}
-            </Modal.Body>
-            <Modal.Footer>
-                <Button  variant='success'>Add</Button>
-                <Button variant='secondary'>Close</Button>
-            </Modal.Footer>
-        </Modal>
+                    </div>
+                )}
+                </div>
+            </React.Fragment> 
         )
     }
     render() {
         return (
-            <React.Fragment>
             <div className="body col-12 p-5 row">
                 {this.mostrarResultados()}
             </div>
-            </React.Fragment>
         );
     }
 }
