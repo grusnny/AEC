@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import "../Home/Home.css";
 import { Container } from 'reactstrap';
-import { MapContainer  as Map, Marker, Popup, TileLayer } from "react-leaflet";
+import { MapContainer  as Map, useMapEvents, Marker, Popup, TileLayer } from "react-leaflet";
 import * as L from 'leaflet'
 import icon from '../Home/marker2.webp';
 import { Auth } from 'aws-amplify';
@@ -12,7 +12,7 @@ import {
 } from 'reactstrap';
 
 
-
+var meses = new Array ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
 var name;
 var profession;
 var mail;
@@ -44,7 +44,7 @@ const onE = (e) => {
         wtel: tel
     }))
         .then(data => {
-            console.log(data); // JSON data parsed by `data.json()` call
+            console.log(data);
         })
         .catch(function (err) {
             console.log(err);
@@ -54,29 +54,54 @@ const onE = (e) => {
 
 function Home() {
 
-    const [worker, setWorker] = React.useState([])
-    const [activeWorker, setActiveWorker] = React.useState(null);
+    const [worker, setWorker] = useState([])
+    const [activeWorker, setActiveWorker] = useState(null);
     const [btnDropright, setOpen] = useState(false);
-
     const toggle = () => setOpen(!btnDropright);
+
+
+function LocationMap() { 
+    const [position, setPosition] = useState(null)
+    const map = useMapEvents({
+        click() {
+        map.locate()
+        },
+        locationfound(e) {
+        setPosition(e.latlng)
+        map.flyTo(e.latlng, map.getZoom())
+        },
+    })
+    return position === null ? null : (
+        <Marker position={position}>
+            <Popup>Estas aquí</Popup>
+        </Marker>
+        )
+}
+
+    function currentDate(){
+        var f=new Date();
+        return (f.getDate() + " de " + meses[f.getMonth()] + " de " + f.getFullYear());
+    }
 
     React.useEffect(() => {
         const fetchData = async () => {
-
             getAllWorkers()
                 .then(data => {
-                    console.log(data); // JSON data parsed by `data.json()` call
+                    const info =JSON.stringify(data)
+                    let workers=[];                  
+                    for (var clave of data){
+                        console.log(clave.profession);
+                        if (clave.profession=="Ing") {
+                          console.log(clave);
+                          workers.push(clave);
+                        }
+                    }
+                    console.log(workers)
+                    setWorker(workers.map(doc => ({ ...doc, id:doc.uId })))
                     
-                    // for (var clave in data){
-                    //     if (data.profession=="Ing") {
-                    //       alert("La clave es " + clave+ " y el valor es " + json[clave]);
-                    //       setWorker(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
-                    //     }
-                    // }
                 })
-                .catch(function (err) {
-                    console.log(err);
-                });
+                .then(data => console.log(data) )
+                .catch(error => console.log('error', error));
         }
         fetchData()
     }, [])
@@ -97,7 +122,8 @@ function Home() {
                         <DropdownItem> <a class="nav-link" href="/plomero">Plomeros</a></DropdownItem>
                     </DropdownMenu>
                 </ButtonDropdown>
-                <Map center={[6.267417, -75.568389]} zoom={15}>
+                    <Map center={[6.267417, -75.568389]} zoom={15} Popup={true}>
+                
                     <TileLayer
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -107,12 +133,15 @@ function Home() {
                             key={element.id}
                             icon={greenIcon}
                             position={[element.latitude, element.length]}
-                            onDblclick={() => {
-                                setActiveWorker(element);
-                            }}
+                            eventHandlers={{
+                                click: () => {
+                                    setActiveWorker(element);
+                                },
+                              }}
+
                         />
                     )}
-                    {activeWorker && (
+                    { activeWorker === null ? null : (
                         <Popup
                             position={[
                                 activeWorker.latitude,
@@ -123,20 +152,46 @@ function Home() {
                             }}
                         >
                             <div>
-                                <Card style={{ width: '12rem' }}>
-                                    <CardImg top width="5%" src={foto = activeWorker.photo} />
-                                    <CardBody>
-                                        <CardTitle>Nombre: {name = activeWorker.name}</CardTitle>
-                                        <CardSubtitle>Correo: {mail = activeWorker.mail}</CardSubtitle>
-                                        <CardText>Profesión: {profession = activeWorker.profession}</CardText>
-                                        <CardSubtitle>Telefono: {tel = activeWorker.telephone}</CardSubtitle>
-                                        <CardSubtitle>{wid = activeWorker.uId}</CardSubtitle>
-                                        <button type="button" className="btn btn-outline-primary" onClick={onE} >Contactar</button>
-                                    </CardBody>
-                                </Card>
+                                <div class="card">
+                                    <div class="card-image">
+                                        <figure class="image is-4by3">{foto = activeWorker.photo}
+                                        <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image"/>
+                                        </figure>
+                                    </div>
+                                    <div class="card-content">
+                                        <div class="media">
+                                        <div class="media-left">
+                                            <figure class="image is-48x48">
+                                            <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image"/>
+                                            </figure>
+                                        </div>
+                                        <div class="media-content">
+                                            <p class="title is-4">{name = activeWorker.name}</p>
+                                            <p class="subtitle is-6">{mail = activeWorker.mail}</p>
+
+                                        </div>
+                                        </div>
+
+                                        <div class="content">
+                                        <strong>Profesión: {profession = activeWorker.profession}</strong>
+                                        <br/>
+                                        <strong>Telefono: {tel = activeWorker.telephone}</strong>
+                                        <br/>
+                                        <strong><time datetime="2016-1-1">{currentDate()}</time></strong>
+                                        <br/>
+                                        <br/>
+                                        <div align="center">
+                                        <button className="button is-primary is-rounded "  onClick={onE}>
+                                                <strong>Contactar</strong>
+                                        </button>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>                            
                             </div>
                         </Popup>
                     )}
+                    <LocationMap/>
                 </Map>
             </Container>
         </div>
