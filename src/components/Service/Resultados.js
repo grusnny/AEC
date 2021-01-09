@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Producto from './Producto';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class Resultados extends Component {
     mostrarResultados=()=>{
@@ -8,8 +9,8 @@ class Resultados extends Component {
         if (resultados.length === 0) return null;
 
         return(
-            <React.Fragment>
-                <div className="body col-16 p-5 row">
+
+                <div className="col-16 p-5 row">
                 {resultados.map((resultado, index) =>
                     <div key={index}>
                         <Producto
@@ -20,7 +21,7 @@ class Resultados extends Component {
                     </div>
                 )}
                 </div>
-            </React.Fragment> 
+
         )
     }
     render() {
