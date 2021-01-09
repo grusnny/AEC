@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import Producto from './Producto';
-import { Container, Row, Col } from 'reactstrap';
-import {Modal, Button} from 'react-bootstrap'; 
 
 class Resultados extends Component {
     mostrarResultados=()=>{
