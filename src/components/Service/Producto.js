@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './card-style.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class Producto extends Component{
     handleClick=(e,id)=>{
