@@ -9,12 +9,12 @@ export default class Account extends Component {
   render() {
     return (
       <Fragment>
-         {this.props.auth.isAuthenticated && this.props.auth.user && (
+         {//this.props.auth.isAuthenticated && this.props.auth.user && (
            <div>
           <section className="hero">
           <div className="container has-text-centered is-fluid">
           <div class="notification is-primary">
-          <h1>Bienvenido {this.props.auth.user.username}</h1>
+          <h1>Bienvenido Usuario {/*this.props.auth.user.username*/}</h1>
               <p className="subtitle is-5">Aqui podras ver tu informacion</p>
               <br />
           </div>
@@ -120,7 +120,7 @@ export default class Account extends Component {
             </section>
             </div>
             </div>
-          )}
+          /*)*/}
         
       </Fragment>
     )
