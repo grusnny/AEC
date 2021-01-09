@@ -14,7 +14,6 @@ function SearchPage() {
                     const info =JSON.stringify(data)
                     let request=[];                  
                     for (var clave of data){
-                        console.log(clave.profession);
                         if (true) {
                             console.log(clave);
                             request.push(clave);

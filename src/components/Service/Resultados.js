@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Producto from './Producto';
 import { Container, Row, Col } from 'reactstrap';
+import {Modal, Button} from 'react-bootstrap'; 
 
 class Resultados extends Component {
     mostrarResultados=()=>{
@@ -9,17 +10,31 @@ class Resultados extends Component {
         if (resultados.length === 0) return null;
 
         return(
-            <Container className='text-center'>
-                        {resultados.map(resultado =>(
-                            <ul>
-                                <Producto
-                                    key={resultado.wId}
-                                    producto={resultado}
-                                    id={resultado.id}
-                                />
-                            </ul>
-                        ))}
-            </Container> 
+            <Modal
+            size="sm"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered>
+            <Modal.Header style={{backgroundColor: '#BAE4FF'}} closeButton>
+            <Modal.Title id="contained-modal-title-vcenter">
+                Reparaciones
+            </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                {resultados.map(resultado =>(
+                    <ul>
+                        <Producto
+                            key={resultado.wId}
+                            producto={resultado}
+                            id={resultado.id}
+                        />
+                    </ul>
+                ))}
+            </Modal.Body>
+            <Modal.Footer>
+                <Button  variant='success'>Add</Button>
+                <Button variant='secondary'>Close</Button>
+            </Modal.Footer>
+        </Modal>
         )
     }
     render() {
