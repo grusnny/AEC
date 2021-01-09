@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Resultado from './Resultados';
 import {postRequest, getAllRequests} from '../services/request'
 import { Auth } from 'aws-amplify';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function SearchPage() {
 
@@ -29,9 +30,9 @@ function SearchPage() {
     }, [])
 
     return (
-        <div className="App">
+        <div >
             <div className="jumbotron" align="center">
-            <h1>Revisa las peticiones de trabajos que has solicitado:</h1>
+            <h2>Revisa las peticiones de trabajos que has solicitado:</h2>
             </div>
             <div  className="row justify-content-center">
                         <Resultado
