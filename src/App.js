@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
-import Products from './components/Products';
-import ProductAdmin from './components/ProductAdmin';
+import Searchpage from './components/Service/Search_Page';
+import Account from './components/MyAccount/Account';
 import LogIn from './components/auth/LogIn';
 import Register from './components/auth/Register';
 import ForgotPassword from './components/auth/ForgotPassword';
@@ -12,10 +12,14 @@ import ForgotPasswordVerification from './components/auth/ForgotPasswordVerifica
 import ChangePassword from './components/auth/ChangePassword';
 import ChangePasswordConfirm from './components/auth/ChangePasswordConfirm';
 import Welcome from './components/auth/Welcome';
+
 import Footer from './components/Footer';
 import { Auth } from 'aws-amplify';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import  Services from './components/Home/Home';
+import SearchPage from './components/Service/Search_Page';
+
 library.add(faEdit);
 
 class App extends Component {
@@ -65,8 +69,8 @@ class App extends Component {
             <Navbar auth={authProps} />
             <Switch>
               <Route exact path="/" render={(props) => <Home {...props} auth={authProps} />} />
-              <Route exact path="/products" render={(props) => <Products {...props} auth={authProps} />} />
-              <Route exact path="/admin" render={(props) => <ProductAdmin {...props} auth={authProps} />} />
+              <Route exact path="/requests" render={(props) => <SearchPage  {...props} auth={authProps} />} />
+              <Route exact path="/account" render={(props) => <Account {...props} auth={authProps} />} />
               <Route exact path="/login" render={(props) => <LogIn {...props} auth={authProps} />} />
               <Route exact path="/register" render={(props) => <Register {...props} auth={authProps} />} />
               <Route exact path="/forgotpassword" render={(props) => <ForgotPassword {...props} auth={authProps} />} />
@@ -74,6 +78,7 @@ class App extends Component {
               <Route exact path="/changepassword" render={(props) => <ChangePassword {...props} auth={authProps} />} />
               <Route exact path="/changepasswordconfirmation" render={(props) => <ChangePasswordConfirm {...props} auth={authProps} />} />
               <Route exact path="/welcome" render={(props) => <Welcome {...props} auth={authProps} />} />
+              <Route exact path="/home" render={(props) => <Services {...props} auth={authProps} />} />
             </Switch>
             <Footer />
           </div>

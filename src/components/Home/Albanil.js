@@ -1,17 +1,14 @@
 import React, { useState } from 'react';
-import "../Home/Home.css";
+import "../Home/Albanil.css";
 import { Container } from 'reactstrap';
 import firebase from "../firebase";
-import { Map, Marker, Popup, TileLayer } from "react-leaflet";
+import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
 import * as L from 'leaflet'
 import icon from '../Home/marker2.webp';
 import {
     Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle,
     ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem
 } from 'reactstrap';
-
-
-
 var name;
 var profession;
 var mail;
@@ -35,7 +32,6 @@ const onE = (e) => {
     console.log(name);
     console.log(profession);
     var user = firebase.auth().currentUser;
-    //console.log(result);
     const querystring = require('querystring');
     axios.post('https://microservicio-dominio.herokuapp.com/Solicitud', querystring.stringify({
         uid: user.uid,
@@ -56,12 +52,11 @@ const onE = (e) => {
             console.log(err);
         })
         .then(function () {
+
         });
 
-
-
 }
-function Home() {
+function Albanil() {
 
     const [worker, setWorker] = React.useState([])
     const [activeWorker, setActiveWorker] = React.useState(null);
@@ -72,7 +67,7 @@ function Home() {
     React.useEffect(() => {
         const fetchData = async () => {
             const db = firebase.firestore()
-            const data = await db.collection('worker').where("profession", "==", "Electricista").get()
+            const data = await db.collection('worker').where("profession", "==", "Albañil").get()
             setWorker(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
 
         }
@@ -82,10 +77,10 @@ function Home() {
     return (
         <div className="App">
             <Container className='text-left'>
-                <ButtonDropdown direction="right" isOpen={btnDropright} toggle={toggle}>
-                    <DropdownToggle caret>
+                <ButtonDropdown  direction="right" isOpen={btnDropright} toggle={toggle} >
+                    <DropdownToggle caret color="info">
                         Categorias
-      </DropdownToggle>
+                     </DropdownToggle>
                     <DropdownMenu>
                         <DropdownItem header>Selecciona una nueva categoria</DropdownItem>
                         <DropdownItem> <a class="nav-link" href="/albanil">Albañiles</a></DropdownItem>
@@ -141,4 +136,4 @@ function Home() {
     );
 }
 
-export default Home; 
+export default Albanil; 
