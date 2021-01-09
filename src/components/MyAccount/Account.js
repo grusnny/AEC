@@ -1,6 +1,6 @@
 import React, { Component, Fragment, useState } from 'react';
 import MapExample from '../MyAccount/map2';
-import {updateUser,postUser} from '../services/user'
+import {updateUser,postUser,getAllUsers} from '../services/user'
 const config = require('../../config.json');
 
 const state = {
@@ -29,20 +29,27 @@ const newWorker = (event) =>{
 }
 
 const setDates =(event) =>{
-  const querystring = require('querystring');
-    postUser(querystring.stringify(
-        // aqui va la info requerida en body, se utiliza para el caso de put y post
-        {
-          direccion:state.direccion,
-          correoAlt:state.correoAlt,
-          telefono:state.telefono
-        }
-        
-      
-  ))
-          .catch(function (err) {
-          console.log(err);
-      });
+  event.preventDefault();
+  getAllUsers()
+                .then(data => {
+                    const info =JSON.stringify(data)
+                    let users=[];                  
+                    for (var clave of data){
+                        if (true) {
+                            console.log(clave);
+                            if (clave.mail==="asdasd"){
+                              
+                            }
+                        }
+                    }
+                    
+                    
+                })
+                .then(data => console.log(data) )
+                .catch(error => console.log('error', error));
+  
+  
+          
 }
 
 export default class Account extends Component {
