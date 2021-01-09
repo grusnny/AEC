@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { MapContainer as Map,TileLayer, Marker, Popup } from 'react-leaflet';
+import React, { useState,useRef,useMemo,useCallback } from 'react';
+import { MapContainer as Map,useMapEvents,TileLayer, Marker, Popup } from 'react-leaflet';
 import "../MyAccount/map2.css";
 const styles = {
     wrapper: { 
@@ -12,48 +12,94 @@ const styles = {
       flex: 1
     } 
   };
-class MapExample extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-        currentPos: null
-        };
-        this.handleClick = this.handleClick.bind(this);
-    }
-handleClick(e){
-this.setState({ currentPos: e.latlng });
-const { lat, lng } = e.latlng;
-console.log(lat, lng);
 
-window.localStorage.setItem("userLatDoc", lat);
-window.localStorage.setItem("userLngDoc", lng);
-}
-    render() {
+  const center = {
+    lat: 51.505,
+    lng: -0.09,
+  }
+function MapExample (){
+
+    const [position, setPosition] = useState(center)
+    
+    function DraggableMarker() {
+        const [draggable, setDraggable] = useState(false)
+        const markerRef = useRef(null)
+        const eventHandlers = useMemo(
+          () => ({
+            dragend() {
+              const marker = markerRef.current
+              if (marker != null) {
+                setPosition(marker.getLatLng())
+                const { lat, lng } = marker.getLatLng();
+                window.localStorage.setItem("userLatDoc", lat);
+                window.localStorage.setItem("userLngDoc", lng);
+              }
+            },
+          }),
+          [],
+        )
+        const toggleDraggable = useCallback(() => {
+          setDraggable((d) => !d)
+        }, [])
+      
+        return (
+          <Marker
+            draggable={draggable}
+            eventHandlers={eventHandlers}
+            position={position}
+            ref={markerRef}>
+            <Popup minWidth={90}>
+              <span onClick={toggleDraggable}>
+                {draggable
+                  ? 'El marcador se puede mover'
+                  : 'Clic aquí para mover el marcador'}
+              </span>
+            </Popup>
+          </Marker>
+        )
+      }
+
+      function LocationMarker() {
+        const map = useMapEvents({
+          click() {
+            map.locate()
+          },
+          locationfound(e) {
+              if(position==center){
+                setPosition(e.latlng)       
+                map.flyTo(e.latlng, map.getZoom())
+                const { lat, lng } = e.latlng;
+                window.localStorage.setItem("userLatDoc", lat);
+                window.localStorage.setItem("userLngDoc", lng);
+              }
+
+          },
+        })
+      
+        return (
+        <div></div>
+        )
+      }
         return (
         <div style={styles.wrapper}>
                 <Map    style={styles.map}
-                        center={[6.26739785475676,-75.56881427764894]}
+                        center={center}
                         zoom={16}
                         maxZoom={20}
                         attributionControl={true}
                         zoomControl={true}
-                        doubleClickZoom={true}
                         scrollWheelZoom={true}
                         dragging={true}
                         animate={true}
                         easeLinearity={0.35}
-                        onClick={this.handleClick}>
+                        Popup={true}>
                     <TileLayer
                     url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
                     />
-                    { this.state.currentPos && <Marker position={this.state.currentPos} draggable={true}>
-                    <Popup position={this.state.currentPos}>
-                        Current location: <pre>{JSON.stringify(this.state.currentPos, null, 2)}</pre>
-                    </Popup>
-                    </Marker>}
+                    <LocationMarker/>
+                    <DraggableMarker/>
                 </Map>
         </div>
         )
-    }
 }
 export default MapExample;
