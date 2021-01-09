@@ -88,7 +88,6 @@ function LocationMap() {
             getAllWorkers()
                 .then(data => {
                     const info =JSON.stringify(data)
-                    console.log("esta es la informacion: " + info);
                     let workers=[];                  
                     for (var clave of data){
                         console.log(clave.profession);
