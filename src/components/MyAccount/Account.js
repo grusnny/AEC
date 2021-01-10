@@ -1,6 +1,7 @@
 import React, { Component, Fragment, useState } from 'react';
 import MapExample from '../MyAccount/map2';
 import {updateUser,postUser,getAllUsers} from '../services/user'
+import Correo from '../auth/LogIn'
 const config = require('../../config.json');
 
 const state = {
@@ -30,22 +31,26 @@ const newWorker = (event) =>{
 
 const setDates =(event) =>{
   event.preventDefault();
+  
   getAllUsers()
                 .then(data => {
                     const info =JSON.stringify(data)
                     let users=[];                  
                     for (var clave of data){
-                        if (true) {
+                        if (true){
                             console.log(clave);
-                            if (clave.mail==="asdasd"){
-                              
+                            if (clave.mail===localStorage.getItem("Correo")){
+                              //console.log(localStorage.getItem("Correo"));
+                            }
+                            else{
+
                             }
                         }
                     }
                     
                     
                 })
-                .then(data => console.log(data) )
+                .then(data => console.log("Successful") )
                 .catch(error => console.log('error', error));
   
   
