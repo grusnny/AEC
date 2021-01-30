@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import './card-style.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import MD5 from 'crypto-js/md5';
 
 class Producto extends Component{
     handleClick=(e,id)=>{
@@ -15,6 +17,10 @@ class Producto extends Component{
         wName,
         wPhoto,
         wProfession}=this.props.producto;
+
+    let price=0;
+    var user = "Necito user";
+    var hash = MD5("4Vj8eK4rloUd272L48hsrarnUA~508029~Ayudaencasa~"+price+"~COP");
         
         return(
             <div className="col-12 col-sm-6 col-md-4 col-lg-12 mb-4" >
@@ -45,9 +51,23 @@ class Producto extends Component{
                         <br/>
                         <br/>
                         <div align="center">
-                        <button className="button is-primary is-rounded "  onClick={this.handleClick}>
-                                <strong>Contactar</strong>
-                        </button>
+                        <form method="post" action="https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu/">
+                            <input name="merchantId" type="hidden" value="508029" />
+                            <input name="accountId" type="hidden" value="512321" />
+                            <input name="description" type="hidden" value="Pago Ayuda en casa" />
+                            <input name="referenceCode" type="hidden" value="Ayudaencasa" />
+                            <input name="amount" type="hidden" value={price} />
+                            <input name="tax" type="hidden" value="0" />
+                            <input name="taxReturnBase" type="hidden" value="0" />
+                            <input name="currency" type="hidden" value="COP" />
+                            <input name="signature" type="hidden" value={hash} />
+                            <input name="test" type="hidden" value="1" />
+                            <input name="buyerEmail" type="hidden" value="davidjrf95@gmail.com" />
+                            <input name="responseUrl" type="hidden" value="http://www.test.com/response" />
+                            <input name="confirmationUrl" type="hidden" value="http://www.test.com/confirmation" />
+                            <input name="Submit" type="submit" className="button is-primary is-rounded" value="Pagar" />
+                        </form>
+                        
                         </div>
                         </div>
                     </div>
