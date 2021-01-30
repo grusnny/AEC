@@ -1,6 +1,8 @@
 import React, { Component, Fragment, useState } from 'react';
 import MapExample from '../MyAccount/map2';
 import {updateUser,postUser,getAllUsers} from '../services/user'
+import {postWorker,updateWorker,getAllWorkers} from '../services/worker'
+import Correo from '../auth/LogIn'
 const config = require('../../config.json');
 
 const state = {
@@ -24,20 +26,63 @@ const handleInputChange = (event) => {
   
 }
 
-const newWorker = (event) =>{
+const setWorkers = (event) =>{
   state.ocupacion=event.target.value
+
 }
 
-const setDates =(event) =>{
+const newWorker = (event)=>{
   event.preventDefault();
-  getAllUsers()
+  let y=0;
+  getAllWorkers()
                 .then(data => {
-                    const info =JSON.stringify(data)
-                    let users=[];                  
+                    const info =JSON.stringify(data)               
                     for (var clave of data){
-                        if (true) {
-                            console.log(clave);
-                            if (clave.mail==="asdasd"){
+                        if (true){
+                            if (clave.mail===localStorage.getItem("Correo")){
+                              console.log(localStorage.getItem("Correo"));
+                              
+                              updateWorker(JSON.stringify(
+                                {
+                                  name: "cambiar",
+                                  profession: state.ocupacion,
+                                  mail: localStorage.getItem("Correo"),
+                                  mailAlt: state.correoAlt,
+                                  telephone: state.telefono,
+                                  length: localStorage.getItem("userLngDoc"),
+                                  latitude: localStorage.getItem("userLatDoc")
+                                }
+                              ))
+                                .then(data => {
+                                  console.log("Successful UpdateW");
+                                })
+                                .catch(function (err) {
+                                  console.log(err);
+                                });
+                            }
+                            else{
+                              console.log(localStorage.getItem("Correo")+"jd");
+                              if(y===0){
+                                postWorker(JSON.stringify(
+                                  // aqui va la info requerida en body, se utiliza para el caso de put y post
+                                  {
+                                      // Esta es la estructura del Json para un post o put de reparaciones el rId se genera automaticamente
+                                      name: "cambiar",
+                                      profession: state.ocupacion,
+                                      mail: localStorage.getItem("Correo"),
+                                      mailAlt: state.correoAlt,
+                                      telephone: state.telefono,
+                                      length: localStorage.getItem("userLngDoc"),
+                                      latitude: localStorage.getItem("userLatDoc")
+                                  }
+                              ))
+                                  .then(data => {
+                                      console.log("Successful neworker");
+                                  })
+                                  .catch(function (err) {
+                                      console.log(err);
+                                  });
+                              }
                               
                             }
                         }
@@ -45,7 +90,76 @@ const setDates =(event) =>{
                     
                     
                 })
-                .then(data => console.log(data) )
+                .then(data => console.log("Successful busq worker") )
+                .catch(error => console.log('error', error));
+}
+
+
+const setDates =(event) =>{
+  event.preventDefault();
+  let y=0;
+  getAllUsers()
+                .then(data => {
+                    const info =JSON.stringify(data)
+                                 
+                    for (var clave of data){
+                        if (true){
+                            
+                            if (clave.mail===localStorage.getItem("Correo")){
+                             if(y===0){
+                              console.log(localStorage.getItem("Correo"));
+                              
+                              updateUser(JSON.stringify(
+                                {
+                                  mail: localStorage.getItem("Correo"),
+                                  mailAlt: state.correoAlt,
+                                  name: "Cambiar",
+                                  photo: "liks",
+                                  telephone: state.telefono,
+                                  length: localStorage.getItem("userLngDoc"),
+                                  latitude: localStorage.getItem("userLatDoc")
+                                }
+                              ))
+                                .then(data => {
+                                  console.log("Successful upt User");
+                                })
+                                .catch(function (err) {
+                                  console.log(err);
+                                });
+                                y++;
+                             }
+                            }
+                            else{
+                              if(y===0){
+                                console.log(localStorage.getItem("Correo")+"jd");
+                              postUser(JSON.stringify(
+                                  // aqui va la info requerida en body, se utiliza para el caso de put y post
+                                  {
+                                      // Esta es la estructura del Json para un post o put de reparaciones el rId se genera automaticamente
+                                      mail:String(localStorage.getItem("Correo")),
+                                      mailAlt: String(state.correoAlt),
+                                      name: "Cambiar",
+                                      photo: "liks",
+                                      telephone: state.telefono,
+                                      length: localStorage.getItem("userLngDoc"),
+                                      latitude: localStorage.getItem("userLatDoc")
+                                  }
+                              ))
+                                  .then(data => {
+                                      console.log("Successful newUser");
+                                  })
+                                  .catch(function (err) {
+                                      console.log(err);
+                                  });
+                                  y++;
+                              }
+                            }
+                        }
+                    }
+                    
+                    
+                })
+                .then(data => console.log("Successful busquedad User") )
                 .catch(error => console.log('error', error));
   
   
@@ -131,7 +245,7 @@ export default class Account extends Component {
                     </div>
                   </div>
                   <div class="column">
-                    <button className="button is-success" type="submit">
+                    <button className="button is-success" type="submit" onClick={setDates}>
                         Ingresar
                       </button>
                   </div>
@@ -152,13 +266,13 @@ export default class Account extends Component {
                           id="dirct"
                           aria-describedby="userNameHelp"
                           placeholder="Ingrese su ocupaccion"
-                          onChange={newWorker}
+                          onChange={setWorkers}
                         />
                       </p>
                     </div>
                   </div>
                   <div class="column">
-                    <button className="button is-success" type="submit">
+                    <button className="button is-success" type="submit" onClick={newWorker}>
                         Ingresar
                       </button>
                   </div>

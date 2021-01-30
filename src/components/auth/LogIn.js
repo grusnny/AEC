@@ -3,6 +3,7 @@ import FormErrors from "../FormErrors";
 import Validate from "../utility/FormValidation";
 import { Auth } from "aws-amplify";
 
+
 class LogIn extends Component {
   state = {
     username: "",
@@ -12,6 +13,7 @@ class LogIn extends Component {
       blankfield: false
     }
   };
+  
 
   clearErrorState = () => {
     this.setState({
@@ -58,15 +60,18 @@ class LogIn extends Component {
       [event.target.id]: event.target.value
     });
     document.getElementById(event.target.id).classList.remove("is-danger");
+    
+    localStorage.setItem("Correo", this.state.username);
+    
   };
 
+ 
   render() {
     return (
       <section className="section auth">
         <div className="container">
           <h1>Log in</h1>
           <FormErrors formerrors={this.state.errors} />
-
           <form onSubmit={this.handleSubmit}>
             <div className="field">
               <p className="control">
@@ -74,10 +79,12 @@ class LogIn extends Component {
                   className="input" 
                   type="text"
                   id="username"
+                  name="correo"
                   aria-describedby="usernameHelp"
                   placeholder="Ingrese nombre de usuario o correo"
                   value={this.state.username}
                   onChange={this.onInputChange}
+                
                 />
               </p>
             </div>
