@@ -1,46 +1,49 @@
-import React, {Component} from 'react';
+import React, { useState } from 'react';
 import Resultado from './Resultados';
-import {postRequest, getAllRequests} from '../services/request'
+import {getAllRequests} from '../services/request'
 import { Auth } from 'aws-amplify';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {getAllUsers} from '../services/user'
 
-function SearchPage() {
+function RequestIn(props) {
 
-    const [resultadoBusqueda, setresultadoBusqueda] = React.useState([]);
+    const [resultadoBusquedaWorker, setresultadoBusquedaWorker] = React.useState([]);
 
     React.useEffect(() => {
-        const fetchData = async () => {
+        const fetchDataWorker = async () => {
+
             getAllRequests()
                 .then(data => {
                     const info =JSON.stringify(data)
                     let request=[];                  
                     for (var clave of data){
-                        if (true) {
-                            console.log(clave);
+                        if (clave.wMail===props.auth.user.attributes.email) {
                             request.push(clave);
                         }
                     }
-                    setresultadoBusqueda(request.map(doc => ({ ...doc, id:doc.uId })))
+                    setresultadoBusquedaWorker(request.map(doc => ({ ...doc, id:doc.uId })))
                     
                 })
                 .then(data => console.log(data) )
                 .catch(error => console.log('error', error));
         }
-        fetchData()
+        fetchDataWorker()
     }, [])
 
     return (
         <div >
-            <div className="jumbotron" align="center">
-            <h2>Revisa las peticiones de trabajos que has solicitado:</h2>
+            <div className="field">
+                <div class="notification is-primary " align="center">
+                    <h2>Revisa las peticiones de trabajos que has recibido:</h2>
+                </div>
             </div>
             <div  className="row justify-content-center">
                         <Resultado
-                            resultado={resultadoBusqueda}
+                            resultado={resultadoBusquedaWorker}
                         />
             </div>
         </div>
     );
 
 }
-export default SearchPage;
+export default RequestIn;

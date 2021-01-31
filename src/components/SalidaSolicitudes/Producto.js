@@ -11,6 +11,7 @@ class Producto extends Component{
     render(){
 
     const {wId,
+        rPrice,
         wTel,
         uId,
         wMail,
@@ -18,23 +19,22 @@ class Producto extends Component{
         wPhoto,
         wProfession}=this.props.producto;
 
-    let price=0;
     var user = "Necito user";
-    var hash = MD5("4Vj8eK4rloUd272L48hsrarnUA~508029~Ayudaencasa~"+price+"~COP");
+    var hash = MD5("4Vj8eK4rloUd272L48hsrarnUA~508029~Ayudaencasa~"+rPrice+"~COP");
         
         return(
             <div className="col-12 col-sm-6 col-md-4 col-lg-12 mb-4" >
                 <div class="card">
                     <div class="card-image">
                         <figure class="image is-4by3">
-                        <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image"/>
+                        <img src={wPhoto} alt="Placeholder image"/>
                         </figure>
                     </div>
                     <div class="card-content">
                         <div class="media">
                         <div class="media-left">
                             <figure class="image is-48x48">
-                            <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image"/>
+                            <img src={wPhoto} alt="Placeholder image"/>
                             </figure>
                         </div>
                         <div class="media-content">
@@ -56,7 +56,7 @@ class Producto extends Component{
                             <input name="accountId" type="hidden" value="512321" />
                             <input name="description" type="hidden" value="Pago Ayuda en casa" />
                             <input name="referenceCode" type="hidden" value="Ayudaencasa" />
-                            <input name="amount" type="hidden" value={price} />
+                            <input name="amount" type="hidden" value={rPrice} />
                             <input name="tax" type="hidden" value="0" />
                             <input name="taxReturnBase" type="hidden" value="0" />
                             <input name="currency" type="hidden" value="COP" />
