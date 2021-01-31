@@ -91,7 +91,7 @@ function LocationMap() {
                     let workers=[];                  
                     for (var clave of data){
                         console.log(clave.profession);
-                        if (clave.profession=="Ing") {
+                        if (clave.profession=="Ingeniero") {
                           console.log(clave);
                           workers.push(clave);
                         }
