@@ -54,7 +54,7 @@ export default function MapWorkers(props) {
     function setModalSuccessShow(value){
         setisOpenModalSuccess(value);
         if(isReload){
-          window.location.href="/requests";
+          window.location.href="/requestsuot";
         }if(isLogin){
         window.location.href="/login";
         }
