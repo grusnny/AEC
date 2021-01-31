@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
-import Searchpage from './components/Service/Search_Page';
 import Account from './components/MyAccount/Account';
 import LogIn from './components/auth/LogIn';
 import Register from './components/auth/Register';
@@ -18,7 +17,8 @@ import { Auth } from 'aws-amplify';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import  Services from './components/Home/Home';
-import SearchPage from './components/Service/Search_Page';
+import SearchPage from './components/SalidaSolicitudes/Search_Page';
+import RequestIn from './components/EntradaSolicitudes/RequestIn';
 
 library.add(faEdit);
 
@@ -69,7 +69,8 @@ class App extends Component {
             <Navbar auth={authProps} />
             <Switch>
               <Route exact path="/" render={(props) => <Home {...props} auth={authProps} />} />
-              <Route exact path="/requests" render={(props) => <SearchPage  {...props} auth={authProps} />} />
+              <Route exact path="/requestsuot" render={(props) => <SearchPage  {...props} auth={authProps} />} />
+              <Route exact path="/requestsin" render={(props) => <RequestIn  {...props} auth={authProps} />} />
               <Route exact path="/account" render={(props) => <Account {...props} auth={authProps} />} />
               <Route exact path="/login" render={(props) => <LogIn {...props} auth={authProps} />} />
               <Route exact path="/register" render={(props) => <Register {...props} auth={authProps} />} />

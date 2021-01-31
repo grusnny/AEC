@@ -1,12 +1,14 @@
 import React, { useState,useRef,useMemo,useCallback } from 'react';
 import { MapContainer as Map,useMapEvents,TileLayer, Marker, Popup } from 'react-leaflet';
-import "../MyAccount/map2.css";
+import './map2.css';
+
 const styles = {
     wrapper: { 
       height: '100%', 
       width: '100%', 
       margin: '0 auto', 
-      display: 'flex' 
+      display: 'flex', 
+
     },
     map: {
       flex: 1
@@ -81,8 +83,9 @@ function MapExample (){
         )
       }
         return (
-        <div style={styles.wrapper}>
-                <Map    style={styles.map}
+        <div id="content"  style={styles.wrapper} >
+                <Map    
+                        style={styles.map}
                         center={center}
                         zoom={16}
                         maxZoom={20}

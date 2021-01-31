@@ -56,4 +56,10 @@ async function getAllWorkers() {
     return response.json(); 
 }   
 
-export {getAllWorkers,getWorkerById,postWorker,updateWorker,deleteWorker}
+async function getWorkersByProfession(profession) {
+    const response = await fetch(REQUEST_API+"?profession="+profession, requestOptionsGet)  
+
+    return response.json(); 
+}   
+
+export {getAllWorkers,getWorkerById,postWorker,updateWorker,deleteWorker,getWorkersByProfession}
