@@ -78,6 +78,7 @@ const newWorker = (event)=>{
                                   telephone: state.telefono,
                                   length: localStorage.getItem("userLngDoc"),
                                   latitude: localStorage.getItem("userLatDoc"),
+                                  photo:state.photo,
                                 }
                               ))
                                 .then(data => {
@@ -106,6 +107,7 @@ const newWorker = (event)=>{
                                       telephone: state.telefono,
                                       length: localStorage.getItem("userLngDoc"),
                                       latitude: localStorage.getItem("userLatDoc"),
+                                      photo:state.photo,
                                   }
                               ))
                                   .then(data => {
@@ -411,7 +413,7 @@ setUrl(url){
               
             </div> 
             <div class="column is-two-thirds">
-            <div class="box" > <MapExample /></div>
+            <div class="box" style={{ height: '100%' }} > <MapExample /></div>
             </div>
             </div>
             
