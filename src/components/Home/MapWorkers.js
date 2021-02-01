@@ -70,80 +70,92 @@ export default function MapWorkers(props) {
         let y=0;
         let x=0;
         let z=0;
-        getAllRequests()
-                    .then(data => {  
-                            let isSaveRequest=false;       
-                            if (props.isAuthenticated && props.user ){
-                                if(z===0){
-                                    for (var clave of data){
+        let isSameWorker=false; 
+        let isSameUser=false; 
+        let guId;                        
+        let count=0; 
+        let datos;
+        getAllUsers()
+            .then(data2 => {  
+                datos=data2;
+                if (props.isAuthenticated && props.user ){
+                    if(z===0){ 
+                                     
+                        for (var clave2 of data2){
+                            count++;
+                            if (clave2.mail===props.user.attributes.email){
+                                    guId=clave2.uId;                                                             
+       
+                                    getAllRequests()
+                                    .then(data => {  
+                                        for (var clave of data){
+                                            if (clave.wId===wId){ 
+                                                if (guId==clave.uId){
+                                                    console.log("modificando")
+                                                    isSameUser=true; 
+                                                    isSameWorker=true;
+                                                    if(isSameWorker && isSameUser){
+                                                        if(x===0){
+                                                            setisOpenModalSuccess(true);
+                                                            setMessage("Ya ha realizado esta solicitud ");
+                                                            x++
+                                                            return;
+                                                        }
+                                                    }          
+                                                }
 
-                                        if (clave.wMail===props.user.attributes.email){
-                                            isSaveRequest=true;  
+                                            } 
                                         }
-                                    }
-                                    if(!isSaveRequest){
-                                        getAllUsers()
-                                            .then(data2 => {                                            
-                                                for (var clave2 of data2){
-                                                        if (clave2.mail===props.user.attributes.email){
-                                                            if(x===0){
-                                                                postRequest(JSON.stringify(
-                                                                    {
-                                                                        uId: clave2.uId,
-                                                                        wId: wId,
-                                                                        wMail: mail,
-                                                                        wName: name,
-                                                                        wPhoto: foto,
-                                                                        wProfession: profession,
-                                                                        wTel: tel,
-                                                                        rPrice:"0"
-                                                                    }
-                                                                ))
-                                                                    .then(data => {
-                                                                        console.log("Successful Request Added");
-                                                                        setisReload(true);
-                                                                        setisOpenModalSuccess(true);
-                                                                        setMessage("Solicitud creada correctamente");
-                                                                    })
-                                                                    .catch(function (err) {
-                                                                        setisReload(false);
-                                                                        setisOpenModalSuccess(true);
-                                                                        setMessage("Error: "+err);
-                                                                    });
-                                                                    x++;
-                                                            }
-                                                        }
-                                                        else{
-                                                            if(x===0){
-                                                                x++;
-                                                            }
-                                                            
-                                                        }
-                                                    }                     
-                        
-                                            })
-                                            .then(data => console.log("Successful Found User") )
-                                            .catch(error => console.log('error', error));
-                                    }else{
-                                        setisOpenModalSuccess(true);
-                                        setMessage("Ya ha realizado esta solicitud ");
-                                    }
-                                    z++;
-                            }
-                            
-                        }else{
-                            if(z===0){
-                                setisLogin(true);
-                                setisReload(false);
-                                setisOpenModalSuccess(true);
-                                setMessage("¡Primero Inicie sesión!");
-                                z++;
-                            }
-                        }
-                        
-                        
-                    })
-                    .catch(error => console.log('error', error));
+                                            console.log(count)
+                                            console.log(data2.length)
+                                            if(count==data2.length && x===0){
+                                                postRequest(JSON.stringify(
+                                                    {
+                                                        uId: guId,
+                                                        wId: wId,
+                                                        wMail: mail,
+                                                        wName: name,
+                                                        wPhoto: foto,
+                                                        wProfession: profession,
+                                                        wTel: tel,
+                                                        rPrice:"0"
+                                                    }
+                                                ))
+                                                    .then(data => {
+                                                        console.log("Successful Request Added");
+                                                        setisReload(true);
+                                                        setisOpenModalSuccess(true);
+                                                        setMessage("Solicitud creada correctamente");
+                                                    })
+                                                    .catch(function (err) {
+                                                        setisReload(false);
+                                                        setisOpenModalSuccess(true);
+                                                        setMessage("Error: "+err);
+                                                    });
+                                                    x++;
+                                            }                                                                                                            
+                
+                                    })
+                                    .then(data => console.log("Successful Found User") )
+                                    .catch(error => console.log('error', error));
+                                }                              
+                        }                                                               
+                        z++;                                     
+                    }
+
+                }else{
+                    if(z===0){
+                        setisLogin(true);
+                        setisReload(false);
+                        setisOpenModalSuccess(true);
+                        setMessage("¡Primero Inicie sesión!");
+                        z++;
+                    }
+                }
+                
+                
+            }).then(data2 =>{})
+            .catch(error => console.log('error', error));                               
 
     }
 

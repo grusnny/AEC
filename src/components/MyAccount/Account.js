@@ -62,66 +62,72 @@ const newWorker = (event)=>{
   }
   let y=0;
   getAllWorkers()
-                .then(data => {
-                    const info =JSON.stringify(data)               
+                .then(data => {  
+                  var isSaveWorker=false; 
+                  var wId;         
                     for (var clave of data){
                         if (state.isAuthenticated && state.user ){
+                          console.log(clave.mail===state.user.attributes.email)
                             if (clave.mail===state.user.attributes.email){
-                              if(y===0){ 
-                              updateWorker(JSON.stringify(
-                                {
-                                  wId:clave.wId,
-                                  name: state.user.username,
-                                  profession: state.ocupacion,
-                                  mail: state.user.attributes.email,
-                                  mailAlt: state.correoAlt,
-                                  telephone: state.telefono,
-                                  length: localStorage.getItem("userLngDoc"),
-                                  latitude: localStorage.getItem("userLatDoc"),
-                                  photo:state.photo,
-                                }
-                              ))
-                                .then(data => {
-                                  console.log("Successful Worker Updated");
-                                  setModalSuccessShow(true);
-                                  setMessageSuccessShow("Usuario actualizado correctamente");                                 
-                                })
-                                .catch(function (err) {
-                                  setModalSuccessShow(true);
-                                  setMessageSuccessShow("Error:"+err);
-                                });
-                                y++;
-                              }
-                            }
-                            else{
-                              if(y===0){
-                                postWorker(JSON.stringify(
-                                  // aqui va la info requerida en body, se utiliza para el caso de put y post
-                                  {
-                                      // Esta es la estructura del Json para un post o put de reparaciones el rId se genera automaticamente
-                                      uId: clave.uId,
-                                      name: state.user.username,
-                                      profession: state.ocupacion,
-                                      mail: state.user.attributes.email,
-                                      mailAlt: state.correoAlt,
-                                      telephone: state.telefono,
-                                      length: localStorage.getItem("userLngDoc"),
-                                      latitude: localStorage.getItem("userLatDoc"),
-                                      photo:state.photo,
-                                  }
-                              ))
-                                  .then(data => {
-                                      console.log("Successful Worker Added");
-                                      setModalSuccessShow(true);
-                                      setMessageSuccessShow("Trabajador creado correctamente");
-                                  })
-                                  .catch(function (err) {
-                                    setModalSuccessShow(true);
-                                    setMessageSuccessShow("Error:"+err);
-                                  });
-                                  y++;
-                                }
-                            }
+                              isSaveWorker=true;
+                              wId=clave.wId;
+                            }                          
+                        }
+                    }
+                    if(isSaveWorker){
+                      if(y===0){ 
+                      updateWorker(JSON.stringify(
+                        {
+                          wId:wId,
+                          name: state.user.username,
+                          profession: state.ocupacion,
+                          mail: state.user.attributes.email,
+                          mailAlt: state.correoAlt,
+                          telephone: state.telefono,
+                          length: localStorage.getItem("userLngDoc"),
+                          latitude: localStorage.getItem("userLatDoc"),
+                          photo:state.photo,
+                        }
+                      ))
+                        .then(data => {
+                          console.log("Successful Worker Updated");
+                          setModalSuccessShow(true);
+                          setMessageSuccessShow("Usuario actualizado correctamente");                                 
+                        })
+                        .catch(function (err) {
+                          setModalSuccessShow(true);
+                          setMessageSuccessShow("Error:"+err);
+                        });
+                        y++;
+                      }
+                    }
+                    else{
+                      if(y===0){
+                        postWorker(JSON.stringify(
+                          // aqui va la info requerida en body, se utiliza para el caso de put y post
+                          {
+                              // Esta es la estructura del Json para un post o put de reparaciones el rId se genera automaticamente
+                              uId: clave.uId,
+                              name: state.user.username,
+                              profession: state.ocupacion,
+                              mail: state.user.attributes.email,
+                              mailAlt: state.correoAlt,
+                              telephone: state.telefono,
+                              length: localStorage.getItem("userLngDoc"),
+                              latitude: localStorage.getItem("userLatDoc"),
+                              photo:state.photo,
+                          }
+                      ))
+                          .then(data => {
+                              console.log("Successful Worker Added");
+                              setModalSuccessShow(true);
+                              setMessageSuccessShow("Trabajador creado correctamente");
+                          })
+                          .catch(function (err) {
+                            setModalSuccessShow(true);
+                            setMessageSuccessShow("Error:"+err);
+                          });
+                          y++;
                         }
                     }
                     
@@ -136,69 +142,74 @@ const setDates =(event) =>{
   let y=0;
   getAllUsers()
                 .then(data => {
-                    const info =JSON.stringify(data)
-                                 
+                  var isSaveUser=false; 
+                  var uId;                                  
                     for (var clave of data){
                         if (state.isAuthenticated && state.user ){
                             if (clave.mail===state.user.attributes.email){
-                             if(y===0){                           
-                              updateUser(JSON.stringify(
-                                {
-                                  uId:state.uId,
-                                  name:state.name,
-                                  mail: state.user.attributes.email,
-                                  mailAlt: state.correoAlt,
-                                  photo: state.photo,
-                                  telephone: state.telefono,
-                                  length: localStorage.getItem("userLngDoc"),
-                                  latitude: localStorage.getItem("userLatDoc"),
-                                  address:state.direccion
-                                }
-                              ))
-                                .then(data => {
-                                  console.log("Successfull User Updated");
-                                  newWorker();
-                                  setModalSuccessShow(true);
-                                })
-                                .catch(function (err) {
-                                  setModalSuccessShow(true);
-                                  setMessageSuccessShow("Error:"+err);
-                                });
-                                y++;
-                             }
+                              isSaveUser=true;
+                              uId=clave.uId;
                             }
-                            else{
-                              if(y===0){
-                              postUser(JSON.stringify(
-                                  // aqui va la info requerida en body, se utiliza para el caso de put y post
-                                  {
-                                      
-                                    // Esta es la estructura del Json para un post o put de reparaciones el rId se genera automaticamente
-                                      name:state.name,
-                                      mail:state.user.attributes.email,
-                                      mailAlt: state.correoAlt,
-                                      name:state.user.username,
-                                      photo: state.photo,
-                                      telephone: state.telefono,
-                                      length: localStorage.getItem("userLngDoc"),
-                                      latitude: localStorage.getItem("userLatDoc"),
-                                      address:state.direccion
-                                  }
-                              ))
-                                  .then(data => {
-                                      console.log("Successful User Added");
-                                      setModalSuccessShow(true);
-                                      setMessageSuccessShow("Usuario creado correctamente");
-                                  })
-                                  .catch(function (err) {
-                                    setModalSuccessShow(true);
-                                    setMessageSuccessShow("Error:"+err);
-                                  });
-                                  y++;
-                              }
-                            }
+                            
                         }
                     }
+                    if(isSaveUser){
+                      if(y===0){                           
+                       updateUser(JSON.stringify(
+                         {
+                           uId:uId,
+                           name:state.name,
+                           mail: state.user.attributes.email,
+                           mailAlt: state.correoAlt,
+                           photo: state.photo,
+                           telephone: state.telefono,
+                           length: localStorage.getItem("userLngDoc"),
+                           latitude: localStorage.getItem("userLatDoc"),
+                           address:state.direccion
+                         }
+                       ))
+                         .then(data => {
+                           console.log("Successfull User Updated");
+                           newWorker();
+                           setModalSuccessShow(true);
+                         })
+                         .catch(function (err) {
+                           setModalSuccessShow(true);
+                           setMessageSuccessShow("Error:"+err);
+                         });
+                         y++;
+                      }
+                     }
+                     else{
+                       if(y===0){
+                       postUser(JSON.stringify(
+                           // aqui va la info requerida en body, se utiliza para el caso de put y post
+                           {
+                               
+                             // Esta es la estructura del Json para un post o put de reparaciones el rId se genera automaticamente
+                               name:state.name,
+                               mail:state.user.attributes.email,
+                               mailAlt: state.correoAlt,
+                               name:state.user.username,
+                               photo: state.photo,
+                               telephone: state.telefono,
+                               length: localStorage.getItem("userLngDoc"),
+                               latitude: localStorage.getItem("userLatDoc"),
+                               address:state.direccion
+                           }
+                       ))
+                           .then(data => {
+                               console.log("Successful User Added");
+                               setModalSuccessShow(true);
+                               setMessageSuccessShow("Usuario creado correctamente");
+                           })
+                           .catch(function (err) {
+                             setModalSuccessShow(true);
+                             setMessageSuccessShow("Error:"+err);
+                           });
+                           y++;
+                       }
+                     }
                     
                     
                 })
@@ -235,56 +246,55 @@ componentDidMount() {
   getAllUsers()
                 .then(data => {
                     const info =JSON.stringify(data)
-                    getAllWorkers()
-                    .then(data2 => {             
-                    for (var clave of data2){
-                        if (this.props.auth.isAuthenticated && this.props.auth.user){
-                            if (clave.mail===this.props.auth.user.attributes.email){
-                              this.setState({
-                                ocupacion:clave.profession
-                              });
-                              state.ocupacion=clave.profession;
-                              this.setState({isRegistered:true});
-                            }
-                            else{
-                              this.setState({isRegistered:false});
-                            }
-                              
-                        }
-                    }
-                    
-                    
-                    
-                })
-                .then(data => console.log("Successful Found Worker") )
-                .catch(error => console.log('error', error));              
                     for (var clave of data){
-                        if (this.props.auth.isAuthenticated && this.props.auth.user){
-                            if (clave.mail===this.props.auth.user.attributes.email){                             
-                              this.setState({
-                                direccion:clave.address,
-                                name:clave.name,
-                                photo:clave.photo,
-                                telefono:clave.telephone,
-                                uId:clave.uId,
-                                correoAlt:clave.mailAlt
-                              });
-                              state.uId=clave.uId;
-                              state.direccion=clave.address
-                              state.name=clave.name;
-                              state.photo=clave.photo;
-                              state.telefono=clave.telephone;
-                              state.correoAlt=clave.mailAlt;  
-                              
-                              this.setState({isRegistered:true});
-                            }
-                            else{
-                              this.setState({isRegistered:false});
-                            }
-                        }
-                    }
-                    
-                    
+                      if (this.props.auth.isAuthenticated && this.props.auth.user){
+                          if (clave.mail===this.props.auth.user.attributes.email){                             
+                            this.setState({
+                              direccion:clave.address,
+                              name:clave.name,
+                              photo:clave.photo,
+                              telefono:clave.telephone,
+                              uId:clave.uId,
+                              correoAlt:clave.mailAlt
+                            });
+                            state.uId=clave.uId;
+                            state.direccion=clave.address
+                            state.name=clave.name;
+                            state.photo=clave.photo;
+                            state.telefono=clave.telephone;
+                            state.correoAlt=clave.mailAlt;  
+                            
+                            this.setState({isRegistered:true});
+                          }
+                          else{
+                            this.setState({isRegistered:false});
+                          }
+                      }
+                  }
+                      getAllWorkers()
+                      .then(data2 => {             
+                      for (var clave2 of data2){
+                          if (this.props.auth.isAuthenticated && this.props.auth.user){
+                              if (clave2.mail===this.props.auth.user.attributes.email){
+                                this.setState({
+                                  ocupacion:clave2.profession
+                                });
+                                state.ocupacion=clave2.profession;
+                                this.setState({isRegistered:true});
+                              }
+                              else{
+                                this.setState({isRegistered:false});
+                              }
+                                
+                          }
+                      }
+                      
+                      
+                      
+                  })
+                  .then(data => console.log("Successful Found Worker") )
+                  .catch(error => console.log('error', error));              
+   
                 })
                 .then(data => console.log("Successful Found User") )
                 .catch(error => console.log('error', error));
