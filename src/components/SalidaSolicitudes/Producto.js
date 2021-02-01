@@ -20,7 +20,11 @@ class Producto extends Component{
         wProfession}=this.props.producto;
 
     var user = "Necito user";
+    var vPrice= false;
     var hash = MD5("4Vj8eK4rloUd272L48hsrarnUA~508029~Ayudaencasa~"+rPrice+"~COP");
+    if(rPrice!=0){
+        vPrice=true;
+    }
         
         return(
             <div className="col-12 col-sm-6 col-md-4 col-lg-12 mb-4" >
@@ -51,7 +55,9 @@ class Producto extends Component{
                         <br/>
                         <br/>
                         <div align="center">
-                        <form method="post" action="https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu/">
+                            
+                        {vPrice(
+                            <form method="post" action="https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu/">
                             <input name="merchantId" type="hidden" value="508029" />
                             <input name="accountId" type="hidden" value="512321" />
                             <input name="description" type="hidden" value="Pago Ayuda en casa" />
@@ -62,11 +68,12 @@ class Producto extends Component{
                             <input name="currency" type="hidden" value="COP" />
                             <input name="signature" type="hidden" value={hash} />
                             <input name="test" type="hidden" value="1" />
-                            <input name="buyerEmail" type="hidden" value="davidjrf95@gmail.com" />
+                            <input name="buyerEmail" type="hidden" value={wMail} />
                             <input name="responseUrl" type="hidden" value="http://www.test.com/response" />
                             <input name="confirmationUrl" type="hidden" value="http://www.test.com/confirmation" />
                             <input name="Submit" type="submit" className="button is-primary is-rounded" value="Pagar" />
-                        </form>
+                            </form>
+                        )}
                         
                         </div>
                         </div>
@@ -78,3 +85,4 @@ class Producto extends Component{
 }
 
 export default Producto;
+
