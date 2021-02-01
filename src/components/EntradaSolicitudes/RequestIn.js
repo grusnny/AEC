@@ -22,7 +22,6 @@ function RequestIn(props) {
                         }
                     }
                     setresultadoBusquedaWorker(request.map(doc => ({ ...doc, id:doc.uId })))
-                    
                 })
                 .then(data => console.log(data) )
                 .catch(error => console.log('error', error));

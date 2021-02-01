@@ -56,7 +56,7 @@ class Producto extends Component{
                         <br/>
                         <div align="center">
                             
-                        {vPrice(
+                        {vPrice &&(
                             <form method="post" action="https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu/">
                             <input name="merchantId" type="hidden" value="508029" />
                             <input name="accountId" type="hidden" value="512321" />
